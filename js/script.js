@@ -11,6 +11,8 @@ const $cardCityState = $("<p class='card-text cap'>city, State</p>")
 //appends gallery cards to the page
 function createCards(){
     $cardInfo.append($cardName).append($cardEmail).append($cardCityState);
+    //$cardInfo.append($cardName).append($cardEmail).append($cardCityState.addClass('card'));
+   // $cardInfo.append($cardName).append($cardEmail).append($cardCityState.addClass('card'));
     $cardImgCont.append($cardImg);
     $card.append($cardImgCont).append($cardInfo);
     $('#gallery').append($card);
