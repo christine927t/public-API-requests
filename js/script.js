@@ -1,23 +1,4 @@
-let headers = new Headers();
-headers.append('name', 'picture', 'email', 'location')
-
-const init = {
-  method: 'GET',
-  headers: headers
-}
-
-fetch('https://randomuser.me/api/', init)
-    .then((response) =>{
-      return response.json();
-    })
-    .then((myJson) => {
-      console.log(myJson)
-    });
-
-//result of API will call createCards
-
-//result of clicking on card will call createModal
-
+/////////HELPER FUNCTIONS/////////
 //create gallery cards
 const $card = $("<div class='card'></div>")
 const $cardImgCont = $("<div class='card-img-container'></div>")
@@ -60,6 +41,27 @@ $button.click(function(){
     $modalCont.hide();  
 })
 
-createCards()
-createModal()
+const url = 'https://randomuser.me/api/?results=12'
 
+/////////FETCH API REQUEST/////////
+fetch(url)
+    .then((response) => response.json())
+    .then(function(data) {
+      console.log(data)
+      let $people = data.results;
+      console.log($people)
+      return $people.map(function(person){
+        createCards()
+        $cardImg.attr("src", `${person.picture.medium}`)
+        $cardName.text(`${person.name.first} ${person.name.last}`)
+        console.log($cardName.text())
+        $cardEmail.text(`${person.email}`)
+        $cardCityState.text(`${person.location.city}`+`, `+ `${person.location.state}`)
+      })
+    })
+    .catch(function(error){
+      console.log(error)      
+    })
+
+
+  
