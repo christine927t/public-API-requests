@@ -1,12 +1,19 @@
+let headers = new Headers();
+headers.append('name', 'picture', 'email', 'location')
 
+const init = {
+  method: 'GET',
+  headers: headers
+}
 
-$.ajax({
-    url: 'https://randomuser.me/api/',
-    dataType: 'json',
-    success: function(data) {
-      console.log(data);
-    }
-  });
+fetch('https://randomuser.me/api/', init)
+    .then((response) =>{
+      return response.json();
+    })
+    .then((myJson) => {
+      console.log(myJson)
+    });
+
 //result of API will call createCards
 
 //result of clicking on card will call createModal
