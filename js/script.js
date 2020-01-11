@@ -1,118 +1,117 @@
 let person;
+const gallery = document.getElementById('gallery')
+const searchCont = document.getElementsByClassName('search-container')
 const url = 'https://randomuser.me/api/?results=12&nat=us'
+
+/////////HELPER FUNCTIONS/////////
+//Creates elements//
+const createElement = (element, attr = {}, text = '') => {
+  let myElement = document.createElement(element);
+
+  for (let prop in attr){
+    myElement[prop] = attr[prop];
+  }
+
+  myElement.textContent = text;
+  return myElement;
+}
 
 /////////SEARCH DIV FEATURE/////////
 //creates search elements
-const $searchForm = $("<form action='#' method='get'>")
-const $searchInput = $("<input type='search' id='search-input' class='search-input' placeholder='Search...'>")
-const $searchSubmit = $("<input type='submit' value='&#x1F50D;' id='search-submit class='search-submit'>")
+const searchForm = createElement("FORM", {action: '#', method: 'get'})
+const searchInput = createElement("INPUT", {type: 'search', id: 'search-input', className: 'search-input', placeholder: 'Search...'})
+const searchSubmit = createElement("INPUT", {type: 'submit', value: '&#x1F50D;', id: 'search-submit', className: 'search-submit'})
 
-
-
-/////////HELPER FUNCTIONS/////////
 const createCards = (person) => {
   //create gallery cards
-  const $card = $("<div class='card'></div>")
-  const $cardImgCont = $("<div class='card-img-container'></div>")
-  const $cardInfo = $("<div class='card-info-container'></div>")
-  const $cardImg = $("<img class='card-img' src='https://placehold.it/90x90' alt='Profile picture'>")
-  const $cardName = $("<h3 id='name' class='card-name cap'>First Last</h3>")
-  const $cardEmail = $("<p class='card-text'>email</p>")
-  const $cardCityState = $("<p class='card-text cap'>city, State</p>")
+  const card = createElement("DIV", {className: "card"});
+  const cardImgCont = createElement("DIV", {className: "card-img-container"})
+  const cardInfo = createElement("DIV", {className: "card-info-container"})
+  const cardImg = createElement("IMG", {className: "card-img", src: `${person.picture.large}`, alt: "Profile picture"})
+  const cardName = createElement("H3", {id: "name", className:"card-name cap"}, `${person.name.first} ${person.name.last}`)
+  const cardEmail = createElement("P", {className: "card-text"}, `${person.email}`)
+  const cardCityState = createElement("P", {className: "card-text cap"}, `${person.location.city}`+`, `+ `${person.location.state}`)
 
   //appending gallery cards to page
-  $cardInfo.append($cardName).append($cardEmail).append($cardCityState);
-  $cardImgCont.append($cardImg);
-  $card.append($cardImgCont).append($cardInfo);
-  $('#gallery').append($card);
-
-  //interpolating person info for each card
-  $cardImg.attr("src", `${person.picture.large}`)
-  $cardName.text(`${person.name.first} ${person.name.last}`)
-  $cardEmail.text(`${person.email}`)
-  $cardCityState.text(`${person.location.city}`+`, `+ `${person.location.state}`)
+  cardInfo.appendChild(cardName).appendChild(cardEmail).appendChild(cardCityState);
+  cardImgCont.appendChild(cardImg);
+  card.appendChild(cardImgCont).appendChild(cardInfo);
+  gallery.appendChild(card);
 
   //click handler to create modal
-  $card.click(function(){
-      createModal(person)
+  card.addEventListener('click', function(){
+    createModal(person)
   })
 }
         
 const createModal = (person) => {
   //create modal elements
-  const $button = $("<button type='button' id='modal-close-btn' class='modal-class-btn'><strong>X</strong></button>")
-  const $modalCont = $("<div class='modal-container'></div>");
-  const $modal = $("<div class='modal'></div>");
-  const $modalInfo = $("<div class='modal-info-container'></div>")
-  const $modalImg = $("<img class='modal-img' src='https://placehold.it/125x125' alt='Profile picture'>")
-  const $modalName = $("<h3 id='name' class='modal-name cap'>First Last</h3>")
-  const $modalEmail = $("<p class='modal-text'>email</p>")
-  const $modalCityState = $("<p class='modal-text cap'>City</p>")
-  const $modalPhone = $("<p class='modal-text'>(555) 555-1212</p>")
-  const $modalAddr = $("<p class='modal-text'>123 Portland Ave., Portland, OR 97204</p>")
-  const $modalBday = $("<p class='modal-text'>Birthday: 10/21/2015</p>")
-  const $bdaySlice = `${person.dob.date}`
-  const $bdayNew = ($bdaySlice.substr(5,2) +'/'+ $bdaySlice.substr(8,2) +'/'+ $bdaySlice.substr(2,2))  
-  const $btnContainer = $("<div class='modal-btn-container'>")
-  const $nextBtn = $("<button type='button' id='modal-prev' class='modal-prev btn'>Prev</button>")
-  const $prevBtn = $("<button type='button' id='modal-next' class='modal-next btn'>Next</button>")
+  const button = createElement("BUTTON", {type:'button', id: 'modal-close-btn', className:'modal-class-btn'}, '<strong>X</strong>')
+  const modalCont = createElement("DIV", {className: 'modal-container'});
+  const modal = createElement("DIV", {className: 'modal'});
+  const modalInfo = createElement("DIV", {className: 'modal-info-container'})
+  const modalImg = createElement("IMG", {className: 'modal-img', src: `${person.picture.large}`, alt: 'Profile picture'},)
+  const modalName = createElement("H3", {id: 'name', className: 'modal-name cap'}, `${person.name.first} ${person.name.last}`)
+  const modalEmail = createElement("P", {className: 'modal-text'}, `${person.email}`)
+  const modalCityState = createElement("P", {className: 'modal-text cap'}, `${person.location.city}`)
+  const modalPhone = createElement("P", {className: 'modal-text'}, `${person.phone}`)
+  const modalAddr = createElement("P", {className: 'modal-text'}, `${person.location.street.number} ${person.location.street.name}`+`, `+ `${person.location.state} ${person.location.postcode}`)
+  const modalBday = createElement("P", {className: 'modal-text'}, `Birthday: `+ bdayNew)
+  const bdaySlice = `${person.dob.date}`
+  const bdayNew = (bdaySlice.substr(5,2) +'/'+ bdaySlice.substr(8,2) +'/'+ bdaySlice.substr(2,2))  
+  const btnContainer = createElement("DIV", {className: 'modal-btn-container'})
+  const nextBtn = createElement("BUTTON", {type: 'button', id: 'modal-prev', className: 'modal-prev btn'}, 'Prev')
+  const prevBtn = createElement("BUTTON", {type: 'button', id: 'modal-next', className: 'modal-next btn'}, 'Next')
 
   //appends modal elements to the page
-  $modalInfo.append($modalImg)
-    .append($modalName)
-    .append($modalEmail)
-    .append($modalCityState)
-    .append("<hr>")
-    .append($modalPhone)
-    .append($modalAddr)
-    .append($modalBday)
-  $btnContainer.append($prevBtn).append($nextBtn)
-  $modal.append($button).append($modalInfo).append($btnContainer);
-  $modalCont.append($modal);
-  $('#gallery').append($modalCont)
-
-  //interpolating person info for each modal
-  $modalImg.attr("src", `${person.picture.large}`)
-  $modalName.text(`${person.name.first} ${person.name.last}`)
-  $modalEmail.text(`${person.email}`)
-  $modalCityState.text(`${person.location.city}`)
-  $modalPhone.text(`${person.phone}`);
-  $modalAddr.text(`${person.location.street.number} ${person.location.street.name}`+`, `+ `${person.location.state} ${person.location.postcode}`)
-  $modalBday.text(`Birthday: `+ $bdayNew)
+  modalInfo.appendChild(modalImg)
+    .appendChild(modalName)
+    .appendChild(modalEmail)
+    .appendChild(modalCityState)
+    .appendChild("<hr>")
+    .appendChild(modalPhone)
+    .appendChild(modalAddr)
+    .appendChild(modalBday)
+  btnContainer.appendChild(prevBtn).appendChild(nextBtn)
+  modal.appendChild(button).appendChild(modalInfo).appendChild(btnContainer);
+  modalCont.appendChild(modal);
+  gallery.appendChild(modalCont)
 
   //click handler to for the 'close' button on modal
-  $button.click(function(){
-    $modalCont.hide();  
+  button.addEventListener('click', function(){
+    modalCont.display = 'none'; 
   })
 }
 
 //appends search elements to the page
-$searchForm.append($searchInput).append($searchSubmit)
-$('.search-container').append($searchForm)
+searchForm.appendChild(searchInput).appendChild(searchSubmit)
+for (let i=0; i < searchCont.length; i++){
+  searchCont[i].appendChild(searchForm)
+}
 
-const $search = (text, people) => {
-  let $searchStore = []
+const search = (text, people) => {
+  let searchStore = []
   people.map(function(person){
-    let $fullName = (`${person.name.first} ${person.name.last}`)
-    if ($fullName.toLowerCase().includes(text.toLowerCase())){
-      $searchStore.push(person);
+    let fullName = (`${person.name.first} ${person.name.last}`)
+    if (fullName.toLowerCase().includes(text.toLowerCase())){
+      searchStore.push(person);
     }  
   })
 
-  console.log($searchStore)
-  if ($searchStore.length > 0) {
-    $('.card').hide();
+  console.log(searchStore)
+  if (searchStore.length > 0) {
+    ('.card').hide();
     //debugger;
     console.log(people)
-    console.log($searchStore)
-    createCards($searchStore)
+    console.log(searchStore)
+    createCards(searchStore)
   }
 }
 
-$searchSubmit.click(function(){
+searchSubmit.click(function(){
   event.preventDefault();
-  text = $searchInput.val();
-  $search(text,people)
+  text = searchInput.val();
+  search(text,people)
 })
 
 //generates HTML for each card
