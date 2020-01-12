@@ -33,20 +33,20 @@ const createCards = (person) => {
   const cardCityState = createElement("P", {className: "card-text cap"}, `${person.location.city}`+`, `+ `${person.location.state}`)
 
   //appending gallery cards to page
-  cardInfo.appendChild(cardName).appendChild(cardEmail).appendChild(cardCityState);
-  cardImgCont.appendChild(cardImg);
-  card.appendChild(cardImgCont).appendChild(cardInfo);
-  gallery.appendChild(card);
+  cardInfo.append(cardName, cardEmail, cardCityState);
+  cardImgCont.append(cardImg);
+  card.append(cardImgCont, cardInfo);
+  gallery.append(card);
 
   //click handler to create modal
-  card.addEventListener('click', function(){
+  card.addEventListener('click', () => {
     createModal(person)
   })
 }
         
 const createModal = (person) => {
   //create modal elements
-  const button = createElement("BUTTON", {type:'button', id: 'modal-close-btn', className:'modal-class-btn'}, '<strong>X</strong>')
+  const button = createElement("BUTTON", {type:'button', id: 'modal-close-btn', className:'modal-class-btn'}, "X")
   const modalCont = createElement("DIV", {className: 'modal-container'});
   const modal = createElement("DIV", {className: 'modal'});
   const modalInfo = createElement("DIV", {className: 'modal-info-container'})
@@ -54,39 +54,33 @@ const createModal = (person) => {
   const modalName = createElement("H3", {id: 'name', className: 'modal-name cap'}, `${person.name.first} ${person.name.last}`)
   const modalEmail = createElement("P", {className: 'modal-text'}, `${person.email}`)
   const modalCityState = createElement("P", {className: 'modal-text cap'}, `${person.location.city}`)
+  const hr = createElement("HR");
   const modalPhone = createElement("P", {className: 'modal-text'}, `${person.phone}`)
   const modalAddr = createElement("P", {className: 'modal-text'}, `${person.location.street.number} ${person.location.street.name}`+`, `+ `${person.location.state} ${person.location.postcode}`)
-  const modalBday = createElement("P", {className: 'modal-text'}, `Birthday: `+ bdayNew)
   const bdaySlice = `${person.dob.date}`
   const bdayNew = (bdaySlice.substr(5,2) +'/'+ bdaySlice.substr(8,2) +'/'+ bdaySlice.substr(2,2))  
+  const modalBday = createElement("P", {className: 'modal-text'}, `Birthday: `+ bdayNew)
   const btnContainer = createElement("DIV", {className: 'modal-btn-container'})
   const nextBtn = createElement("BUTTON", {type: 'button', id: 'modal-prev', className: 'modal-prev btn'}, 'Prev')
   const prevBtn = createElement("BUTTON", {type: 'button', id: 'modal-next', className: 'modal-next btn'}, 'Next')
 
   //appends modal elements to the page
-  modalInfo.appendChild(modalImg)
-    .appendChild(modalName)
-    .appendChild(modalEmail)
-    .appendChild(modalCityState)
-    .appendChild("<hr>")
-    .appendChild(modalPhone)
-    .appendChild(modalAddr)
-    .appendChild(modalBday)
-  btnContainer.appendChild(prevBtn).appendChild(nextBtn)
-  modal.appendChild(button).appendChild(modalInfo).appendChild(btnContainer);
-  modalCont.appendChild(modal);
-  gallery.appendChild(modalCont)
+  modalInfo.append(modalImg, modalName, modalEmail, modalCityState, hr, modalPhone, modalAddr, modalBday)
+  btnContainer.append(prevBtn, nextBtn)
+  modal.append(button, modalInfo, btnContainer);
+  modalCont.append(modal);
+  gallery.append(modalCont)
 
   //click handler to for the 'close' button on modal
-  button.addEventListener('click', function(){
-    modalCont.display = 'none'; 
+  button.addEventListener('click', () => {
+    modalCont.style.display = 'none'; 
   })
 }
 
 //appends search elements to the page
-searchForm.appendChild(searchInput).appendChild(searchSubmit)
+searchForm.append(searchInput, searchSubmit)
 for (let i=0; i < searchCont.length; i++){
-  searchCont[i].appendChild(searchForm)
+  searchCont[i].append(searchForm)
 }
 
 const search = (text, people) => {
@@ -108,9 +102,9 @@ const search = (text, people) => {
   }
 }
 
-searchSubmit.click(function(){
+searchSubmit('click', (event) => {
   event.preventDefault();
-  text = searchInput.val();
+  text = searchInput.value;
   search(text,people)
 })
 
