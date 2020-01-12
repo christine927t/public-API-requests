@@ -92,17 +92,18 @@ const search = (text, people) => {
     }  
   })
 
-  console.log(searchStore)
   if (searchStore.length > 0) {
-    ('.card').hide();
+    let cardAll = Array.from(document.getElementsByClassName('card'))
+    cardAll.map(element => element.style.display = 'none');
     //debugger;
     console.log(people)
     console.log(searchStore)
-    createCards(searchStore)
+    createCards(SearchStore)
+    
   }
 }
 
-searchSubmit('click', (event) => {
+searchSubmit.addEventListener('click', (event) => {
   event.preventDefault();
   text = searchInput.value;
   search(text,people)
