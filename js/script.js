@@ -2,6 +2,7 @@ let person;
 const gallery = document.getElementById('gallery')
 const searchCont = document.getElementsByClassName('search-container')
 const url = 'https://randomuser.me/api/?results=12&nat=us'
+let data;
 
 /////////HELPER FUNCTIONS/////////
 //Creates elements//
@@ -16,11 +17,11 @@ const createElement = (element, attr = {}, text = '') => {
   return myElement;
 }
 
-/////////SEARCH DIV FEATURE/////////
 //creates search elements
 const searchForm = createElement("FORM", {action: '#', method: 'get'})
 const searchInput = createElement("INPUT", {type: 'search', id: 'search-input', className: 'search-input', placeholder: 'Search...'})
-const searchSubmit = createElement("INPUT", {type: 'submit', value: '&#x1F50D;', id: 'search-submit', className: 'search-submit'})
+const searchSubmit = createElement("BUTTON", {type: 'submit', id: 'search-submit', className: 'search-submit'})
+searchSubmit.innerHTML = '&#x1F50D;'
 
 const createCards = (person) => {
   //create gallery cards
@@ -46,7 +47,7 @@ const createCards = (person) => {
         
 const createModal = (person) => {
   //create modal elements
-  const button = createElement("BUTTON", {type:'button', id: 'modal-close-btn', className:'modal-class-btn'}, "X")
+  const button = createElement("BUTTON", {type:'button', id: 'modal-close-btn', className:'modal-close-btn'}, "X")
   const modalCont = createElement("DIV", {className: 'modal-container'});
   const modal = createElement("DIV", {className: 'modal'});
   const modalInfo = createElement("DIV", {className: 'modal-info-container'})
@@ -61,8 +62,8 @@ const createModal = (person) => {
   const bdayNew = (bdaySlice.substr(5,2) +'/'+ bdaySlice.substr(8,2) +'/'+ bdaySlice.substr(2,2))  
   const modalBday = createElement("P", {className: 'modal-text'}, `Birthday: `+ bdayNew)
   const btnContainer = createElement("DIV", {className: 'modal-btn-container'})
-  const nextBtn = createElement("BUTTON", {type: 'button', id: 'modal-prev', className: 'modal-prev btn'}, 'Prev')
-  const prevBtn = createElement("BUTTON", {type: 'button', id: 'modal-next', className: 'modal-next btn'}, 'Next')
+  const nextBtn = createElement("BUTTON", {type: 'button', id: 'modal-prev', className: 'modal-prev btn'}, 'Next')
+  const prevBtn = createElement("BUTTON", {type: 'button', id: 'modal-next', className: 'modal-next btn'}, 'Prev')
 
   //appends modal elements to the page
   modalInfo.append(modalImg, modalName, modalEmail, modalCityState, hr, modalPhone, modalAddr, modalBday)
@@ -75,8 +76,21 @@ const createModal = (person) => {
   button.addEventListener('click', () => {
     modalCont.style.display = 'none'; 
   })
+
+  //event handler for prev/next buttons
+  nextBtn.addEventListener('click', (data) => {
+    //let counter = people.indexOf();
+      console.log(data)
+    console.log(counter)
+    // for (let x = 0; x < people.length; x++){
+    //   counter +=1;
+    // }
+    //   createModal(person[x])
+  })
+
 }
 
+/////////SEARCH DIV FEATURE/////////
 //appends search elements to the page
 searchForm.append(searchInput, searchSubmit)
 for (let i=0; i < searchCont.length; i++){
@@ -95,14 +109,15 @@ const search = (text, people) => {
   if (searchStore.length > 0) {
     let cardAll = Array.from(document.getElementsByClassName('card'))
     cardAll.map(element => element.style.display = 'none');
-    //debugger;
     console.log(people)
     console.log(searchStore)
-    createCards(searchStore)
-    
+    return searchStore.map(function(person){
+      createCards(person)
+    })
   }
 }
 
+//event handler for search bar
 searchSubmit.addEventListener('click', (event) => {
   event.preventDefault();
   text = searchInput.value;
