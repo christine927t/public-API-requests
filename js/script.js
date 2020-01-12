@@ -85,7 +85,7 @@ for (let i=0; i < searchCont.length; i++){
 
 const search = (text, people) => {
   let searchStore = []
-  people.map(function(person){
+  people.forEach(person => {
     let fullName = (`${person.name.first} ${person.name.last}`)
     if (fullName.toLowerCase().includes(text.toLowerCase())){
       searchStore.push(person);
@@ -98,7 +98,7 @@ const search = (text, people) => {
     //debugger;
     console.log(people)
     console.log(searchStore)
-    createCards(SearchStore)
+    createCards(searchStore)
     
   }
 }
