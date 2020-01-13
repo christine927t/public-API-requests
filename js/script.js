@@ -2,7 +2,8 @@ let person;
 const gallery = document.getElementById('gallery')
 const searchCont = document.getElementsByClassName('search-container')
 const url = 'https://randomuser.me/api/?results=12&nat=us'
-let data;
+let people;
+let fullName;
 
 /////////HELPER FUNCTIONS/////////
 //Creates elements//
@@ -72,21 +73,41 @@ const createModal = (person) => {
   modalCont.append(modal);
   gallery.append(modalCont)
 
-  //click handler to for the 'close' button on modal
-  button.addEventListener('click', () => {
-    modalCont.style.display = 'none'; 
-  })
+  // //click handler to for the 'close' button on modal
+  // button.addEventListener('click', () => {
+  //   modalCont.style.display = 'none'; 
+  //   console.log(index)
+  // })
 
   //event handler for prev/next buttons
-  nextBtn.addEventListener('click', (data) => {
-    //let counter = people.indexOf();
-      console.log(data)
-    console.log(counter)
-    // for (let x = 0; x < people.length; x++){
-    //   counter +=1;
-    // }
-    //   createModal(person[x])
+  nextBtn.addEventListener('click', () => {
+    fullName = (person.name.first)
+    let index = people.findIndex(x => x.name.first === fullName)
+    index += 1;
+    if (index > 11){
+      index = 0
+    } 
+      modalCont.style.display = 'none'; 
+      createModal(people[index])
+      console.log(index)
   })
+
+  prevBtn.addEventListener('click', () => {
+    fullName = (person.name.first)
+    let index = people.findIndex(x => x.name.first === fullName)
+    index -= 1;
+    if (index < 0){
+      index = 11;
+    } 
+      modalCont.style.display = 'none'; 
+      createModal(people[index])
+      console.log(index)
+  })
+
+    //click handler to for the 'close' button on modal
+    button.addEventListener('click', () => {
+      modalCont.style.display = 'none'; 
+    })
 
 }
 
@@ -100,7 +121,7 @@ for (let i=0; i < searchCont.length; i++){
 const search = (text, people) => {
   let searchStore = []
   people.forEach(person => {
-    let fullName = (`${person.name.first} ${person.name.last}`)
+    fullName = (`${person.name.first} ${person.name.last}`)
     if (fullName.toLowerCase().includes(text.toLowerCase())){
       searchStore.push(person);
     }  
@@ -123,6 +144,15 @@ searchSubmit.addEventListener('click', (event) => {
   text = searchInput.value;
   search(text,people)
 })
+
+
+//event handler for search/keyup
+searchInput.addEventListener('keyup', (event) => {
+  event.preventDefault();
+  text = searchInput.value; 
+  search(text,people)
+});
+
 
 //generates HTML for each card
 const generateCardHTML = (data) => {
