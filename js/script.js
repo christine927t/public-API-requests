@@ -1,3 +1,7 @@
+////////Public API requests (using Fetch API)////////
+//by Christine Treacy//
+
+
 let person;
 const gallery = document.getElementById('gallery')
 const searchCont = document.getElementsByClassName('search-container')
@@ -5,7 +9,7 @@ const url = 'https://randomuser.me/api/?results=12&nat=us'
 let people;
 let fullName;
 
-/////////HELPER FUNCTIONS/////////
+////////HELPER FUNCTION////////
 //Creates elements//
 const createElement = (element, attr = {}, text = '') => {
   let myElement = document.createElement(element);
@@ -24,6 +28,7 @@ const searchInput = createElement("INPUT", {type: 'search', id: 'search-input', 
 const searchSubmit = createElement("BUTTON", {type: 'submit', id: 'search-submit', className: 'search-submit'})
 searchSubmit.innerHTML = '&#x1F50D;'
 
+////////CREATES & APPENDS PAGE ELEMENTS////////
 const createCards = (person) => {
   //create gallery cards
   const card = createElement("DIV", {className: "card"});
@@ -73,12 +78,6 @@ const createModal = (person) => {
   modalCont.append(modal);
   gallery.append(modalCont)
 
-  // //click handler to for the 'close' button on modal
-  // button.addEventListener('click', () => {
-  //   modalCont.style.display = 'none'; 
-  //   console.log(index)
-  // })
-
   //event handler for prev/next buttons
   nextBtn.addEventListener('click', () => {
     fullName = (person.name.first)
@@ -87,9 +86,8 @@ const createModal = (person) => {
     if (index > 11){
       index = 0
     } 
-      modalCont.style.display = 'none'; 
-      createModal(people[index])
-      console.log(index)
+    modalCont.style.display = 'none'; 
+    createModal(people[index])
   })
 
   prevBtn.addEventListener('click', () => {
@@ -101,14 +99,12 @@ const createModal = (person) => {
     } 
       modalCont.style.display = 'none'; 
       createModal(people[index])
-      console.log(index)
   })
 
     //click handler to for the 'close' button on modal
     button.addEventListener('click', () => {
       modalCont.style.display = 'none'; 
     })
-
 }
 
 /////////SEARCH DIV FEATURE/////////
@@ -130,8 +126,6 @@ const search = (text, people) => {
   if (searchStore.length > 0) {
     let cardAll = Array.from(document.getElementsByClassName('card'))
     cardAll.map(element => element.style.display = 'none');
-    console.log(people)
-    console.log(searchStore)
     return searchStore.map(function(person){
       createCards(person)
     })
@@ -160,7 +154,6 @@ const generateCardHTML = (data) => {
     people = data.results;
     return people.map(function(person){
       createCards(person)
-      //debugger;
     })
 }
 
