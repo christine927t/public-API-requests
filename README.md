@@ -8,7 +8,9 @@ On the main page, type a name to filter/search by a particular employee's name.
 
 ### Built With:
 **HTML**
+
 **CSS**
+
 **JavaScript**
 
 ### APIs:
