@@ -7,9 +7,9 @@ This app uses a single Fetch API request to return 12 random people. The user ca
 On the main page, type a name to filter/search by a particular employee's name.
 
 ### Built With:
-# HTML
-# CSS
-# JS
+**HTML**
+**CSS**
+**JavaScript**
 
 ### APIs:
 [Random User Generator](https://randomuser.me/api/?results=12&nat=us) 
