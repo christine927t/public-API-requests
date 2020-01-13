@@ -12,8 +12,7 @@ On the main page, type a name to filter/search by a particular employee's name.
 # JS
 
 ### APIs:
-[Random User Generator] 
-(https://randomuser.me/api/?results=12&nat=us) 
+[Random User Generator](https://randomuser.me/api/?results=12&nat=us) 
 
 ### CSS changes: 
 So far I've added a background image, changed the background and size of the search button as well as changed the color scheme around a little bit. 
