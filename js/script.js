@@ -5,6 +5,7 @@
 let person;
 const gallery = document.getElementById('gallery')
 const searchCont = document.getElementsByClassName('search-container')
+// const url = 'https://randomuser.me/api/?results=12&nat=us&lego'
 const url = 'https://randomuser.me/api/?results=12&nat=us'
 let people;
 let fullName;
