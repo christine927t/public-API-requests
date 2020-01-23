@@ -1,12 +1,11 @@
 ////////Public API requests (using Fetch API)////////
 //by Christine Treacy//
 
-
 let person;
 const gallery = document.getElementById('gallery')
 const searchCont = document.getElementsByClassName('search-container')
-// const url = 'https://randomuser.me/api/?results=12&nat=us&lego'
-const url = 'https://randomuser.me/api/?results=12&nat=us'
+const url = 'https://randomuser.me/api/?results=12&nat=us&lego'
+// const url = 'https://randomuser.me/api/?results=12&nat=us'
 let people;
 let fullName;
 
